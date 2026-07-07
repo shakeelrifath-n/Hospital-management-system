@@ -1,0 +1,24 @@
+spring.application.name=projectSpringBoot
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# IMPORTANT: Configure these values for your environment
+# Database URL - Change if using different host/port
+spring.datasource.url=jdbc:mysql://localhost:3306/hms
+
+# Database Credentials - CHANGE THESE FOR YOUR ENVIRONMENT
+spring.datasource.username=root
+spring.datasource.password=YOUR_DATABASE_PASSWORD_HERE
+
+# Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+# Static Files
+images.dir=src/main/resources/static/images
+
+# Server Port
+server.port=8080
+
+# Optional: Add these for production
+# spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+# spring.jpa.properties.hibernate.format_sql=true
