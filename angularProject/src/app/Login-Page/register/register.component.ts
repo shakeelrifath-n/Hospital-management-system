@@ -31,7 +31,7 @@ export class RegisterComponent {
     formData.append('user', new Blob([JSON.stringify(userData)], {type: 'application/json'}));
 
     if (this.selectedFile) {
-      formData.append('image', this.selectedFile, this.selectedFile.name);
+      formData.append('imageFile', this.selectedFile, this.selectedFile.name);
     }
 
     this.http.post<ApiResponse>('http://localhost:8080/api/user/saveUser', formData)

@@ -8,6 +8,7 @@ import { UserService } from '../../../../user/user.service';
 import { MedicineService } from '../../../pharmacist/medicine/medicine.service';
 import { TestService } from '../../../laboratorist/test/test.service';
 import { ApiResponse } from '../../../../util/api.response.model';
+import { AuthService } from '../../../../security/service/auth.service';
 
 @Component({
   selector: 'app-prescription-create',
@@ -36,7 +37,8 @@ export class PrescriptionCreateComponent implements OnInit {
     private prescriptionService: PrescriptionService,
     private userService: UserService,
     private medicineService: MedicineService,
-    private testService: TestService
+    private testService: TestService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -145,8 +147,8 @@ export class PrescriptionCreateComponent implements OnInit {
     this.userService.findUsersByRole('PATIENT').subscribe({
       next: (response: ApiResponse) => {
         if (response.successful && response.data) {
-          if (Array.isArray(response.data['PATIENT'])) {
-            this.patients = response.data['PATIENT'];
+          if (Array.isArray(response.data['users'])) {
+            this.patients = response.data['users'];
           }
           console.log('Patients fetched successfully:', this.patients);
         } else {
@@ -228,9 +230,30 @@ export class PrescriptionCreateComponent implements OnInit {
   }
 
   createPrescription(prescription: Prescription) {
+    const doctor = this.authService.getStoredUser();
+
+    if (!doctor || doctor.role !== Role.DOCTOR) {
+      alert('Only a logged-in doctor can create a prescription.');
+      return;
+    }
+
+    if (!this.selectedUser) {
+      alert('Please select a patient.');
+      return;
+    }
+
+    this.prescription.patient = this.selectedUser;
+    this.prescription.user = this.selectedUser;
+    this.prescription.doctor = doctor;
+    this.prescription.medicines = [...this.selectedMedicines];
+    this.prescription.medicine = [...this.selectedMedicines];
+    this.prescription.TestEntityList = [...this.selectedTests];
+    this.prescription.test = this.selectedTests[0];
+    this.prescription.prescriptionDate = this.prescription.prescriptionDate || new Date();
+
     this.prescriptionService.createPrescription(prescription).subscribe({
-      next: (newPrescription: Prescription) => {
-        console.log('Prescription created successfully!', newPrescription);
+      next: (response: ApiResponse) => {
+        console.log('Prescription created successfully!', response?.data?.['prescription']);
         alert('Prescription created successfully');
         this.resetForm();
       },
@@ -245,7 +268,7 @@ export class PrescriptionCreateComponent implements OnInit {
     this.prescription = new Prescription();
     this.selectedMedicines = [];
     this.selectedTests = [];
-    this.selectedUser = new UserModel();
+    this.selectedUser = undefined as unknown as UserModel;
     this.loadTests();
     this.loadPatients();
     this.loadMedicines();

@@ -4,8 +4,9 @@
     <!-- Select Patient -->
     <div class="form-group">
         <label for="patient">Select Patient:</label>
-        <select class="form-control" [(ngModel)]="selectedUser" (change)="onUserSelect()">
-            <option *ngFor="let patient of patients" [value]="patient">
+        <select class="form-control" [(ngModel)]="selectedUser" (change)="onUserSelect()" name="patient">
+            <option [ngValue]="null">Select Patient</option>
+            <option *ngFor="let patient of patients" [ngValue]="patient">
                 {{ patient.name }}
             </option>
         </select>
@@ -23,7 +24,8 @@
     <!-- Select Medicines -->
     <div class="form-group">
         <label for="medicines">Select Medicines:</label>
-        <select class="form-control" [(ngModel)]="selectedMedicine" (change)="onMedicineSelect()">
+        <select class="form-control" [(ngModel)]="selectedMedicine" (change)="onMedicineSelect()" name="medicine">
+            <option [ngValue]="null">Select Medicine</option>
             <option *ngFor="let medicine of medicines" [ngValue]="medicine">
                 {{ medicine.medicineName }}
             </option>
@@ -43,7 +45,8 @@
     <!-- Select Tests -->
     <div class="form-group">
         <label for="tests">Select Tests:</label>
-        <select class="form-control" [(ngModel)]="selectedTest" (change)="onTestSelect()">
+        <select class="form-control" [(ngModel)]="selectedTest" (change)="onTestSelect()" name="test">
+            <option [ngValue]="null">Select Test</option>
             <option *ngFor="let test of tests" [ngValue]="test">
                 {{ test.testName }}
             </option>
@@ -68,7 +71,7 @@
     <!-- Notes -->
     <div class="form-group">
         <label for="notes">Notes:</label>
-        <textarea class="form-control" [(ngModel)]="prescription.notes"></textarea>
+        <textarea class="form-control" [(ngModel)]="prescription.notes" name="notes"></textarea>
     </div>
 
     <!-- Create Prescription Button -->

@@ -20,7 +20,7 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private int phone;
+    private String phone;
     private String email;
     private String address;
     private Date invoiceDate;

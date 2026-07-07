@@ -9,11 +9,16 @@ export class Prescription {
     createdAt!: Date;
     updatedAt!: Date;
 
-    test!: Test;
+    doctor?: UserModel;
+    patient?: UserModel;
 
-    medicine: Medicine [] = [];
+    medicines: Medicine[] = [];
+    TestEntityList: Test[] = [];
 
-    user!: UserModel;
+    // Backward-compatible aliases used by older templates/components.
+    user?: UserModel;
+    medicine: Medicine[] = [];
+    test?: Test;
 
 }
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, map, Observable} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Role, UserModel, UserRoleMap} from "../../user/user.model";
 import {ApiResponse} from "../../util/api.response.model";
 import {StorageUtil} from "../../util/storage.util";
@@ -24,11 +24,12 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<boolean> {
-    let params = new HttpParams();
-    params = params.append('email', email);
-    params = params.append('password', password);
+    const loginPayload = {
+      email: email,
+      password: password
+    };
 
-    return this.httpClient.post<ApiResponse>(this.baseUrl + '/login', {}, {params}).pipe(
+    return this.httpClient.post<ApiResponse>(this.baseUrl + '/login', loginPayload).pipe(
       map(response => {
         if (response.successful) {
           const jwt = response.data.jwt;

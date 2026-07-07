@@ -29,13 +29,13 @@
       </div>
 
       <div class="appointment-row" *ngFor="let appointment of filteredAppointments">
-        <div>{{ appointment.name }}</div>
-        <div>{{ appointment.email }}</div>
-        <div>{{ appointment.phone }}</div>
+        <div>{{ appointment?.name || 'N/A' }}</div>
+        <div>{{ appointment?.email || 'N/A' }}</div>
+        <div>{{ appointment?.phone || 'N/A' }}</div>
         <div>{{ appointment.date | date: 'shortDate' }}</div>
-        <div>{{ appointment.time }}</div>
-        <div>{{ appointment.notes }}</div>
-        <div>{{ appointment.doctor.name || 'Not Assigned' }}</div>
+        <div>{{ appointment?.time || 'N/A' }}</div>
+        <div>{{ appointment?.notes || 'N/A' }}</div>
+        <div>{{ appointment?.doctor?.name || 'Not Assigned' }}</div>
         <div class="assign-doctor">
           <select class="form-control" (change)="onDoctorSelect(appointment, $event)">
             <option value="">Select Doctor</option>

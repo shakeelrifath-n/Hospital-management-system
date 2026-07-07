@@ -28,4 +28,16 @@ export class EditprofilepntComponent implements OnInit {
       this.router.navigate(['patientprofile']); // Adjust route as needed
     });
   }
+
+  medicalHistoryText(): string {
+    return (this.profile?.medicalHistory ?? [])
+      .map(history => `${history.condition} | ${history.diagnosisDate} | ${history.notes}`)
+      .join('\n');
+  }
+
+  allergiesText(): string {
+    return (this.profile?.allergies ?? [])
+      .map(allergy => `${allergy.substance} | ${allergy.reaction}`)
+      .join('\n');
+  }
 }

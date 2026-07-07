@@ -71,6 +71,10 @@ import { PrescriptionCreateComponent } from './Component/doctor/prescription/pre
 import { PrescriptionListComponent } from './Component/doctor/prescription/prescription-list/prescription-list.component';
 import { PrescriptionViewComponent } from './Component/doctor/prescription/prescription-view/prescription-view.component';
 import { DepartmentComponent } from './Component/receptionist/department/department.component';
+import { AdminProfileComponent } from './Component/admin/Profile/admin-profile/admin-profile.component';
+import { AdminProfileUpdateComponent } from './Component/admin/Profile/admin-profile-update/admin-profile-update.component';
+import { LastappointmentComponent } from './Home-Page/lastappointment/lastappointment.component';
+import { ForgetpasswordComponent } from './Login-Page/forgetpassword/forgetpassword.component';
 
 const routes: Routes = [
 
@@ -213,8 +217,13 @@ const routes: Routes = [
 
   // Auth Part
   { path: 'login', component: LoginComponent },
+  { path: 'forgetpassword', component: ForgetpasswordComponent },
 
   { path: 'register', component: RegisterComponent },
+
+  { path: 'adminprofile', component: AdminProfileComponent, canActivate: [AuthGuard] },
+  { path: 'adminprofileedit', component: AdminProfileUpdateComponent, canActivate: [AuthGuard] },
+  { path: 'lastappointment', component: LastappointmentComponent },
 
 
 

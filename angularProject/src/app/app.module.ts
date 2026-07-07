@@ -78,6 +78,8 @@ import { PrescriptionCreateComponent } from './Component/doctor/prescription/pre
 import { PrescriptionListComponent } from './Component/doctor/prescription/prescription-list/prescription-list.component';
 import { PrescriptionViewComponent } from './Component/doctor/prescription/prescription-view/prescription-view.component';
 import { DepartmentComponent } from './Component/receptionist/department/department.component';
+import { LastappointmentComponent } from './Home-Page/lastappointment/lastappointment.component';
+import { ForgetpasswordComponent } from './Login-Page/forgetpassword/forgetpassword.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +135,8 @@ import { DepartmentComponent } from './Component/receptionist/department/departm
     TestUpdateComponent,
     AdminProfileComponent,
     AdminProfileUpdateComponent,
+    LastappointmentComponent,
+    ForgetpasswordComponent,
     ReportViewComponent,
     PrescriptionCreateComponent,
     PrescriptionListComponent,

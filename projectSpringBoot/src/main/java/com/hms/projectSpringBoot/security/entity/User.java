@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    private int cell;
+    private String cell;
     private int age;
     private String gender;
     private Date birthday;

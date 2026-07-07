@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Prescription } from './prescription.model';
+import { ApiResponse } from '../../../util/api.response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,35 +13,35 @@ export class PrescriptionService {
 
   constructor(private http: HttpClient) {}
 
-  getAllPrescriptions(): Observable<Prescription[]> {
-    return this.http.get<Prescription[]>(this.apiUrl);
+  getAllPrescriptions(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.apiUrl);
   }
 
-  getPrescriptionById(id: number): Observable<Prescription> {
-    return this.http.get<Prescription>(`${this.apiUrl}/${id}`);
+  getPrescriptionById(id: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
   }
 
-  createPrescription(prescription: Prescription): Observable<Prescription> {
-    return this.http.post<Prescription>(this.apiUrl, prescription);
+  createPrescription(prescription: Prescription): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.apiUrl, prescription);
   }
 
-  updatePrescription(id: number, prescription: Prescription): Observable<Prescription> {
-    return this.http.put<Prescription>(`${this.apiUrl}/${id}`, prescription);
+  updatePrescription(id: number, prescription: Prescription): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}/${id}`, prescription);
   }
 
   deletePrescription(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getPrescriptionsByDoctor(doctorId: number): Observable<Prescription[]> {
-    return this.http.get<Prescription[]>(`${this.apiUrl}/doctor/${doctorId}`);
+  getPrescriptionsByDoctor(doctorId: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/doctor/${doctorId}`);
   }
 
-  getPrescriptionsByPatient(patientId: number): Observable<Prescription[]> {
-    return this.http.get<Prescription[]>(`${this.apiUrl}/patient/${patientId}`);
+  getPrescriptionsByPatient(patientId: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/patient/${patientId}`);
   }
 
-  getPrescriptionsByDate(date: Date): Observable<Prescription[]> {
-    return this.http.get<Prescription[]>(`${this.apiUrl}/date?date=${date.toISOString()}`);
+  getPrescriptionsByDate(date: Date): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/date?date=${date.toISOString()}`);
   }
 }

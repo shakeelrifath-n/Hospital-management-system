@@ -3,7 +3,7 @@ export class UserModel {
   name!: string;
   email!: string;
   password!: string;
-  cell!: number;
+  cell!: string;
   age!: number;
   gender!: string;
   birthday!: Date;

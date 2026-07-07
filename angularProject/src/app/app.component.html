@@ -1,7 +1,7 @@
 <ng-container *ngIf="authService.isAuthenticated$ | async">
   <div class="main-wrapper">
     <app-navbar></app-navbar>
-    <app-sidebar></app-sidebar>
+    <app-sidebar ngSkipHydration></app-sidebar>
     <div class="page-wrapper">
       <div class="content">
         <router-outlet></router-outlet>

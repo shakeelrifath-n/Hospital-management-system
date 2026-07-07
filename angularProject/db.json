@@ -355,7 +355,7 @@
   "patientprofile": {
     "name": "Jane Smith",
     "dateOfBirth": "1990-05-15",
-    "phone": "987-654-3210",
+    "phone": "9999999999",
     "email": "jane.smith@example.com",
     "address": "456 Elm St, Town, Country",
     "gender": "Female",
@@ -384,7 +384,7 @@
     "employeeId": "REC0012",
     "position": "Front Desk Receptionist",
     "department": "Administration",
-    "workHours": "9 AM - 5 PM"
+    "workHours": "9 AM - 6 PM"
   },
   "appointments": [
     {
@@ -583,5 +583,6 @@
       "reason": "WOW2"
     }
   ],
-  "reportdoc": []
+  "reportdoc": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }

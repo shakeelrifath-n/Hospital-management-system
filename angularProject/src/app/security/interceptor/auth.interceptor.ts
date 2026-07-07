@@ -11,8 +11,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const jwt = StorageUtil.getFromLocalStorage('jwt');
-    console.log(jwt);
-    if (jwt) {
+    const isPublicRequest =
+      req.url.includes('/api/auth/login') ||
+      req.url.includes('/api/user/saveUser') ||
+      req.url.includes('/api/departments') ||
+      req.url.includes('/api/user/findUsersByRole') ||
+      req.url.includes('/api/appointments/save');
+
+    if (jwt && !isPublicRequest) {
       const clonedReq = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${jwt}`)
       });

@@ -24,12 +24,60 @@ export class PrescriptionViewComponent implements OnInit {
 
   fetchPrescription(id: number): void {
     this.prescriptionService.getPrescriptionById(id).subscribe({
-      next: (prescription: Prescription) => {
-        this.prescription = prescription;
+      next: (response: ApiResponse) => {
+        this.prescription = response?.data?.['prescription'] || null;
       },
       error: (error) => {
         console.error('Error fetching prescription:', error);
       }
     });
+  }
+
+  getMedicineItems(): any[] {
+    if (!this.prescription) {
+      return [];
+    }
+
+    if (Array.isArray(this.prescription.medicines) && this.prescription.medicines.length) {
+      return this.prescription.medicines;
+    }
+
+    if (Array.isArray(this.prescription.medicine)) {
+      return this.prescription.medicine;
+    }
+
+    return [];
+  }
+
+  getMedicineText(): string {
+    return this.getMedicineItems()
+      .map((medicine: any) => `${medicine.medicineName} (${medicine.medicineStrength})`)
+      .join(', ');
+  }
+
+  getTestItems(): any[] {
+    if (!this.prescription) {
+      return [];
+    }
+
+    if (Array.isArray(this.prescription.TestEntityList) && this.prescription.TestEntityList.length) {
+      return this.prescription.TestEntityList;
+    }
+
+    if (Array.isArray(this.prescription.test)) {
+      return this.prescription.test;
+    }
+
+    if (this.prescription.test) {
+      return [this.prescription.test];
+    }
+
+    return [];
+  }
+
+  getTestText(): string {
+    return this.getTestItems()
+      .map((test: any) => test.testName)
+      .join(', ');
   }
 }

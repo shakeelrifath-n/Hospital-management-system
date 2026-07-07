@@ -3,7 +3,7 @@ import {Medicine} from "../medicine/medicine.model";
 export class MedicineBill {
   id!: number;
   name!: string;
-  phone!: number;
+  phone!: string;
   email!: string;
   address!: string;
   invoiceDate!: Date;

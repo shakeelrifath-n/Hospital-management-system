@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PrescriptionService } from '../prescription.service';
 import { Prescription } from '../prescription.model';
 import { Router } from '@angular/router';
+import { ApiResponse } from '../../../../util/api.response.model';
 
 @Component({
   selector: 'app-prescription-list',
@@ -23,13 +24,54 @@ export class PrescriptionListComponent implements OnInit {
 
   fetchPrescriptions(): void {
     this.prescriptionService.getAllPrescriptions().subscribe({
-      next: (prescriptions: Prescription[]) => {
-        this.prescriptions = prescriptions;
+      next: (response: ApiResponse) => {
+        const prescriptions = response?.data?.['prescriptions'];
+        this.prescriptions = Array.isArray(prescriptions) ? prescriptions : [];
       },
       error: (error: any) => {
         console.error('Error fetching prescriptions:', error);
       }
     });
+  }
+
+  getMedicineItems(prescription: Prescription): any[] {
+    if (Array.isArray(prescription.medicines) && prescription.medicines.length) {
+      return prescription.medicines;
+    }
+
+    if (Array.isArray(prescription.medicine)) {
+      return prescription.medicine;
+    }
+
+    return [];
+  }
+
+  getMedicineText(prescription: Prescription): string {
+    return this.getMedicineItems(prescription)
+      .map((medicine: any) => `${medicine.medicineName} (${medicine.medicineStrength})`)
+      .join(', ');
+  }
+
+  getTestItems(prescription: Prescription): any[] {
+    if (Array.isArray(prescription.TestEntityList) && prescription.TestEntityList.length) {
+      return prescription.TestEntityList;
+    }
+
+    if (Array.isArray(prescription.test)) {
+      return prescription.test;
+    }
+
+    if (prescription.test) {
+      return [prescription.test];
+    }
+
+    return [];
+  }
+
+  getTestText(prescription: Prescription): string {
+    return this.getTestItems(prescription)
+      .map((test: any) => test.testName)
+      .join(', ');
   }
 
   viewPrescription(id: number): void {
@@ -54,12 +96,11 @@ export class PrescriptionListComponent implements OnInit {
           </head>
           <body>
             <h2>Prescription ID: ${prescription.id}</h2>
-            <h4>Patient: ${prescription.user.name}</h4>
+            <h4>Patient: ${prescription.patient?.name || prescription.user?.name || 'N/A'}</h4>
             <h4>Medicines:</h4>
-            <ul>
-              ${prescription.medicine.map(medicine => `<li>${medicine.medicineName} (${medicine.medicineStrength})</li>`).join('')}
-            </ul>
+            <p>${this.getMedicineText(prescription) || 'None'}</p>
             <h4>Tests:</h4>
+            <p>${this.getTestText(prescription) || 'None'}</p>
             <h4>Notes:</h4>
             <p>${prescription.notes}</p>
           </body>

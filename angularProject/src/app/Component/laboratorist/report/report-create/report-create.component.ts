@@ -116,7 +116,7 @@ export class ReportCreateComponent implements OnInit {
         name: '',
         email: '',
         password: '',
-        cell: 0,
+        cell: '',
         age: 0,
         gender: '',
         birthday: new Date(),

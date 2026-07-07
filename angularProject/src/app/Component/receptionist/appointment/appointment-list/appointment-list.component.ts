@@ -5,7 +5,6 @@ import { AuthService } from '../../../../security/service/auth.service';
 import { AppointmentModel } from '../appointment.model';
 import { UserModel } from '../../../../user/user.model';
 import { ApiResponse } from '../../../../util/api.response.model';
-import {app} from "../../../../../../server";
 
 @Component({
   selector: 'app-appointment-list',
@@ -97,7 +96,7 @@ export class AppointmentListComponent implements OnInit {
   searchAppointments(): void {
     if (this.searchTerm) {
       this.filteredAppointments = this.appointments.filter(appointment =>
-        appointment.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        (appointment.name || '').toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         (appointment.doctor?.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) || false)
       );
     } else {

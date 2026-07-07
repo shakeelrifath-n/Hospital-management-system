@@ -3,17 +3,9 @@
     <div>
       <h4>Prescription ID: {{ prescription.id }}</h4>
       <h4>Medicines:</h4>
-      <ul>
-        <li *ngFor="let medicine of prescription.medicine">
-          {{ medicine.medicineName }} ({{ medicine.medicineStrength }})
-        </li>
-      </ul>
+      <p>{{ getMedicineText() || 'None' }}</p>
       <h4>Tests:</h4>
-      <ul>
-        <li *ngFor="let test of prescription.test ? [prescription.test] : []">
-          {{ test.testName }}
-        </li>
-      </ul>
+      <p>{{ getTestText() || 'None' }}</p>
       <h4>Notes:</h4>
       <p>{{ prescription.notes }}</p>
     </div>
