@@ -31,9 +31,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy built Angular app from builder
 COPY --from=builder /app/dist/angular-project /usr/share/nginx/html
 
-# Create non-root user and change ownership
-RUN addgroup -g 1000 nginx && adduser -D -u 1000 -G nginx nginx
-RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /var/run
+# Change ownership to existing nginx user
+RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /var/run /etc/nginx/conf.d
 
 # Switch to non-root user
 USER nginx
