@@ -28,8 +28,8 @@ RUN rm -rf /etc/nginx/conf.d/* /usr/share/nginx/html/*
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy built Angular app from builder
-COPY --from=builder /app/dist/angular-project/ /usr/share/nginx/html/
+# Copy built Angular app from builder - Angular 18 outputs to dist/angular-project/browser/
+COPY --from=builder /app/dist/angular-project/browser/ /usr/share/nginx/html/
 
 # Change ownership to existing nginx user for better file permissions
 RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
