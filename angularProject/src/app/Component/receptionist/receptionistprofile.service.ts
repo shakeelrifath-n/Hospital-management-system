@@ -2,20 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReceptionistProfileModel } from './receptionistprofile.model';
 import { Observable } from 'rxjs';
+import { ConfigService } from '../../util/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReceptionistprofileService {
-  private apiUrl = 'http://localhost:3000/receptionistprofile';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   getProfile(): Observable<ReceptionistProfileModel> {
-    return this.http.get<ReceptionistProfileModel>(this.apiUrl);
+    const url = this.configService.getApiBaseUrl() + '/user/profile';
+    return this.http.get<ReceptionistProfileModel>(url);
   }
 
   updateProfile(profile: ReceptionistProfileModel): Observable<ReceptionistProfileModel> {
-    return this.http.put<ReceptionistProfileModel>(this.apiUrl, profile);
+    const url = this.configService.getApiBaseUrl() + '/user/profile';
+    return this.http.put<ReceptionistProfileModel>(url, profile);
   }
 }

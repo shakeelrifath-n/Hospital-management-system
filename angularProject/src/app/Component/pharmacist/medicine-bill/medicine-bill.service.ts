@@ -3,25 +3,28 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MedicineBill } from './medicine-bill.model';
 import {ApiResponse} from "../../../util/api.response.model";
+import { ConfigService } from '../../../util/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicineBillService {
-  private apiUrl = '/api/bills';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   getAllBills(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/`);
+    const url = `${this.configService.getApiBaseUrl()}/bills/`;
+    return this.http.get<ApiResponse>(url);
   }
 
   getBillById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
+    const url = `${this.configService.getApiBaseUrl()}/bills/${id}`;
+    return this.http.get<ApiResponse>(url);
   }
 
   createBill(bill: MedicineBill)  : Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(`${this.apiUrl}/create`, bill);
+    const url = `${this.configService.getApiBaseUrl()}/bills/create`;
+    return this.http.post<ApiResponse>(url, bill);
   }
 
   updateBill(id: number, bill: MedicineBill): Observable<ApiResponse> {

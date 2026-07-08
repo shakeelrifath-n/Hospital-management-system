@@ -3,26 +3,28 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DepartmentModel } from './department.model';
 import {ApiResponse} from "../../../util/api.response.model";
+import { ConfigService } from '../../../util/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  private apiUrl = '/api/departments';
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   getDepartments(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/`);
+    const url = `${this.configService.getApiBaseUrl()}/departments/`;
+    return this.http.get<ApiResponse>(url);
   }
 
   getDepartmentById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
+    const url = `${this.configService.getApiBaseUrl()}/departments/${id}`;
+    return this.http.get<ApiResponse>(url);
   }
 
   addDepartment(department: DepartmentModel): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.apiUrl, department);
+    const url = `${this.configService.getApiBaseUrl()}/departments`;
+    return this.http.post<ApiResponse>(url, department);
   }
 
   updateDepartment(id: number, department: DepartmentModel): Observable<ApiResponse> {

@@ -3,21 +3,23 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Medicine } from './medicine.model';
 import { ApiResponse } from "../../../util/api.response.model";
+import { ConfigService } from '../../../util/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MedicineService {
-  private apiUrl = '/api/medicines';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   getAllMedicines(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/`);
+    const url = `${this.configService.getApiBaseUrl()}/medicines/`;
+    return this.http.get<ApiResponse>(url);
   }
 
   getMedicineById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
+    const url = `${this.configService.getApiBaseUrl()}/medicines/${id}`;
+    return this.http.get<ApiResponse>(url);
   }
 
   addMedicine(medicine: {

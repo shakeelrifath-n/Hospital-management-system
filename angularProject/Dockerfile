@@ -19,8 +19,12 @@ RUN npm run build
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
 
-# Install curl for health checks
-RUN apk add --no-cache curl
+# Install curl for health checks and envsubst for environment variable substitution
+RUN apk add --no-cache curl gettext
+
+# Accept build argument for API base URL (default to /api for internal proxy)
+ARG API_BASE_URL=/api
+ARG ENVIRONMENT=development
 
 # Remove default nginx config and files
 RUN rm -rf /etc/nginx/conf.d/* /usr/share/nginx/html/*
@@ -30,6 +34,16 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built Angular app from builder - Angular 18 outputs to dist/angular-project/browser/
 COPY --from=builder /app/dist/angular-project/browser/ /usr/share/nginx/html/
+
+# Generate environment.json configuration file based on build arguments
+RUN mkdir -p /usr/share/nginx/html/assets/config && \
+    cat > /usr/share/nginx/html/assets/config/environment.json <<EOF
+{
+  "apiBaseUrl": "${API_BASE_URL}",
+  "timeout": 30000,
+  "environment": "${ENVIRONMENT}"
+}
+EOF
 
 # Change ownership to existing nginx user for better file permissions
 RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d

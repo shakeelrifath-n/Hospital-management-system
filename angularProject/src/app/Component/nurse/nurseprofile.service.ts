@@ -2,20 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NurseProfileModel } from './nurseprofile.model';
 import { Observable } from 'rxjs';
+import { ConfigService } from '../../util/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NurseprofileService {
-  private apiUrl = 'http://localhost:3000/nurseprofile';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   getProfile(): Observable<NurseProfileModel> {
-    return this.http.get<NurseProfileModel>(this.apiUrl);
+    const url = this.configService.getApiBaseUrl() + '/user/profile';
+    return this.http.get<NurseProfileModel>(url);
   }
 
   updateProfile(profile: NurseProfileModel): Observable<NurseProfileModel> {
-    return this.http.put<NurseProfileModel>(this.apiUrl, profile);
+    const url = this.configService.getApiBaseUrl() + '/user/profile';
+    return this.http.put<NurseProfileModel>(url, profile);
   }
 }

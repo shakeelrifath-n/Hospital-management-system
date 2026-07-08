@@ -3,43 +3,50 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AppointmentModel} from './appointment.model';
 import {ApiResponse} from "../../../util/api.response.model";
+import {ConfigService} from "../../../util/config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = '/api/appointments';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
   createAppointment(appointment: AppointmentModel): Observable<ApiResponse> {
-    return this.httpClient.post<ApiResponse>(`${this.apiUrl}/save`, appointment);
+    const url = `${this.configService.getApiBaseUrl()}/appointments/save`;
+    return this.httpClient.post<ApiResponse>(url, appointment);
   }
 
   getAllAppointments(): Observable<ApiResponse> {
-    return this.httpClient.get<ApiResponse>(`${this.apiUrl}/`);
+    const url = `${this.configService.getApiBaseUrl()}/appointments/`;
+    return this.httpClient.get<ApiResponse>(url);
   }
 
   getAppointmentById(id: number): Observable<ApiResponse> {
-    return this.httpClient.get<ApiResponse>(`${this.apiUrl}/${id}`);
+    const url = `${this.configService.getApiBaseUrl()}/appointments/${id}`;
+    return this.httpClient.get<ApiResponse>(url);
   }
 
   updateAppointment(appointment: AppointmentModel): Observable<ApiResponse> {
-    return this.httpClient.put<ApiResponse>(`${this.apiUrl}/update`, appointment);
+    const url = `${this.configService.getApiBaseUrl()}/appointments/update`;
+    return this.httpClient.put<ApiResponse>(url, appointment);
   }
 
   deleteAppointment(id: number): Observable<ApiResponse> {
-    return this.httpClient.delete<ApiResponse>(`${this.apiUrl}/${id}`);
+    const url = `${this.configService.getApiBaseUrl()}/appointments/${id}`;
+    return this.httpClient.delete<ApiResponse>(url);
   }
 
   getAppointmentsByUserId(userId: number): Observable<ApiResponse> {
-    return this.httpClient.get<ApiResponse>(`${this.apiUrl}/getAppointmentsByUserId`, {
+    const url = `${this.configService.getApiBaseUrl()}/appointments/getAppointmentsByUserId`;
+    return this.httpClient.get<ApiResponse>(url, {
       params: { userId: userId }
     });
   }
 
   getAppointmentsByDoctorId(doctorId: number): Observable<ApiResponse> {
-    return this.httpClient.get<ApiResponse>(`${this.apiUrl}/getAppointmentsByDoctorId`, {
+    const url = `${this.configService.getApiBaseUrl()}/appointments/getAppointmentsByDoctorId`;
+    return this.httpClient.get<ApiResponse>(url, {
       params: { doctorId: doctorId }
     });
   }

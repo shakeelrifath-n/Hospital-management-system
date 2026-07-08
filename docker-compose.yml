@@ -79,9 +79,12 @@ services:
     build:
       context: ./angularProject
       dockerfile: Dockerfile
+      args:
+        - API_BASE_URL=${API_BASE_URL:-/api}
+        - ENVIRONMENT=${ENVIRONMENT:-development}
     container_name: hms-frontend
     ports:
-      - "80:80"
+      - "${FRONTEND_PORT:-80}:80"
     depends_on:
       - backend
     networks:

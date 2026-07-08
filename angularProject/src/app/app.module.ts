@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {BrowserModule, provideClientHydration} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -14,6 +14,7 @@ import {
   withFetch,
   withInterceptorsFromDi
 } from '@angular/common/http';
+import {ConfigService} from './util/config.service';
 import {LoginComponent} from './Login-Page/login/login.component';
 import {AppointmenthomeComponent} from './Home-Page/appointmenthome/appointmenthome.component';
 import {BodyhomeComponent} from './Home-Page/bodyhome/bodyhome.component';
@@ -153,9 +154,16 @@ import { ForgetpasswordComponent } from './Login-Page/forgetpassword/forgetpassw
   providers: [
     provideClientHydration(),
     provideHttpClient(withFetch()),
+    ConfigService,
     AuthService,
     StorageUtil,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigService) => () => configService.loadConfig(),
+      deps: [ConfigService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

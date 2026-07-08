@@ -2,21 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Test } from '../test/test.model';
+import { ConfigService } from '../../../util/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TestService {
-  private baseUrl = '/api/tests';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   getAllTests(): Observable<any> {
-    return this.http.get<any>(this.baseUrl);
+    const url = `${this.configService.getApiBaseUrl()}/tests`;
+    return this.http.get<any>(url);
   }
 
   getTestById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+    const url = `${this.configService.getApiBaseUrl()}/tests/${id}`;
   }
 
   createTest(test: Test): Observable<any> {

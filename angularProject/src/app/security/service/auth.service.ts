@@ -4,13 +4,12 @@ import {HttpClient} from '@angular/common/http';
 import {Role, UserModel, UserRoleMap} from "../../user/user.model";
 import {ApiResponse} from "../../util/api.response.model";
 import {StorageUtil} from "../../util/storage.util";
+import {ConfigService} from "../../util/config.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private baseUrl: string = "/api/auth";
 
   private currentUserSubject = new BehaviorSubject<UserModel | null>(this.getStoredUser());
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -19,7 +18,8 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private configService: ConfigService
   ) {
   }
 
@@ -29,7 +29,8 @@ export class AuthService {
       password: password
     };
 
-    return this.httpClient.post<ApiResponse>(this.baseUrl + '/login', loginPayload).pipe(
+    const apiUrl = this.configService.getApiBaseUrl() + '/auth/login';
+    return this.httpClient.post<ApiResponse>(apiUrl, loginPayload).pipe(
       map(response => {
         if (response.successful) {
           const jwt = response.data.jwt;

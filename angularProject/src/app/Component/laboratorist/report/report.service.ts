@@ -3,12 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Report } from './report.model';
 import { ApiResponse } from '../../../util/api.response.model';
+import { ConfigService } from '../../../util/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportService {
-  private baseUrl = '/api/reports'; 
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -16,16 +16,17 @@ export class ReportService {
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   getReports(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl);
+    const url = `${this.configService.getApiBaseUrl()}/reports`;
+    return this.http.get<ApiResponse>(url);
   }
 
 
   getById(id: string): Observable<any> {
-
-    return this.http.get(this.baseUrl + "/" + id);
+    const url = `${this.configService.getApiBaseUrl()}/reports/${id}`;
+    return this.http.get(url);
 
   }
 
