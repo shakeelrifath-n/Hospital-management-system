@@ -1,0 +1,50 @@
+# Node modules and build
+node_modules/
+dist/
+.angular/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log
+yarn-error.log
+
+# Testing
+src/**/*.spec.ts
+karma.conf.js
+
+# Documentation
+*.md
+README.md
+docs/
+
+# Misc
+.DS_Store
+*.tmp
+.editorconfig
+
+# Build artifacts
+coverage/
+dist-ssr/
+
+# Database
+*.sql

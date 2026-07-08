@@ -1,0 +1,51 @@
+# Maven
+target/
+.m2/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.classpath
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+.env.local
+
+# Build
+*.log
+*.jar
+*.war
+*.ear
+
+# Documentation
+*.md
+README.md
+docs/
+
+# Database
+*.sql
+
+# Node (not needed for Java backend)
+node_modules/
+npm-debug.log
+
+# Tests
+src/test/
+
+# Misc
+.DS_Store
+*.tmp
