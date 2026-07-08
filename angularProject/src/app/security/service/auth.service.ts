@@ -10,7 +10,7 @@ import {StorageUtil} from "../../util/storage.util";
 })
 export class AuthService {
 
-  private baseUrl: string = "http://localhost:8080/api/auth";
+  private baseUrl: string = "/api/auth";
 
   private currentUserSubject = new BehaviorSubject<UserModel | null>(this.getStoredUser());
   public currentUser$ = this.currentUserSubject.asObservable();

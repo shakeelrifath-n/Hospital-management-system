@@ -9,7 +9,7 @@ import {ApiResponse} from "../../../util/api.response.model";
 })
 export class DepartmentService {
 
-  private apiUrl = 'http://localhost:8080/api/departments';
+  private apiUrl = '/api/departments';
 
   constructor(private http: HttpClient) {}
 

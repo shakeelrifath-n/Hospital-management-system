@@ -9,7 +9,7 @@ import {ApiResponse} from "../../../util/api.response.model";
 })
 export class ManufacturerService {
 
-  private apiUrl = 'http://localhost:8080/api/manufacturers';
+  private apiUrl = '/api/manufacturers';
 
   constructor(private http: HttpClient) {}
 

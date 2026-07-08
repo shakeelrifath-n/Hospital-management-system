@@ -8,7 +8,7 @@ import {ApiResponse} from "../../../util/api.response.model";
   providedIn: 'root'
 })
 export class AppointmentService {
-  private apiUrl = 'http://localhost:8080/api/appointments';
+  private apiUrl = '/api/appointments';
 
   constructor(private httpClient: HttpClient) {}
 

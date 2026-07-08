@@ -8,7 +8,7 @@ import { ApiResponse } from '../../../util/api.response.model';
   providedIn: 'root'
 })
 export class ReportService {
-  private baseUrl = 'http://localhost:8080/api/reports'; 
+  private baseUrl = '/api/reports'; 
 
   private httpOptions = {
     headers: new HttpHeaders({

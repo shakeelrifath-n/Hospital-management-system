@@ -34,7 +34,7 @@ export class RegisterComponent {
       formData.append('imageFile', this.selectedFile, this.selectedFile.name);
     }
 
-    this.http.post<ApiResponse>('http://localhost:8080/api/user/saveUser', formData)
+    this.http.post<ApiResponse>('/api/user/saveUser', formData)
       .subscribe(response => {
           console.log(response);
           alert('Registration successful!');

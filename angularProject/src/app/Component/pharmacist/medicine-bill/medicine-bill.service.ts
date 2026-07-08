@@ -8,7 +8,7 @@ import {ApiResponse} from "../../../util/api.response.model";
   providedIn: 'root'
 })
 export class MedicineBillService {
-  private apiUrl = 'http://localhost:8080/api/bills'; // Adjust URL to match your Spring Boot API
+  private apiUrl = '/api/bills';
 
   constructor(private http: HttpClient) { }
 

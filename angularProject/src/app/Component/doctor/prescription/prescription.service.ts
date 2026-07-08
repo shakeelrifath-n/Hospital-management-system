@@ -9,7 +9,7 @@ import { ApiResponse } from '../../../util/api.response.model';
 })
 export class PrescriptionService {
 
-  private apiUrl = 'http://localhost:8080/api/prescriptions'; 
+  private apiUrl = '/api/prescriptions'; 
 
   constructor(private http: HttpClient) {}
 

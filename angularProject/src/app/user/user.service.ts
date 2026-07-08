@@ -10,7 +10,7 @@ import { StorageUtil } from '../util/storage.util';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/api/user';
+  private apiUrl = '/api/user';
 
   constructor(private http: HttpClient) { }
 

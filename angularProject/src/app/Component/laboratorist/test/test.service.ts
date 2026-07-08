@@ -7,7 +7,7 @@ import { Test } from '../test/test.model';
   providedIn: 'root',
 })
 export class TestService {
-  private baseUrl = 'http://localhost:8080/api/tests'; // Update the base URL as needed
+  private baseUrl = '/api/tests';
 
   constructor(private http: HttpClient) {}
 
