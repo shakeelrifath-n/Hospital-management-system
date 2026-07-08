@@ -22,20 +22,19 @@ FROM nginx:alpine
 # Install curl for health checks
 RUN apk add --no-cache curl
 
-# Remove default nginx config
-RUN rm -rf /etc/nginx/conf.d/*
+# Remove default nginx config and files
+RUN rm -rf /etc/nginx/conf.d/* /usr/share/nginx/html/*
 
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy built Angular app from builder
-COPY --from=builder /app/dist/angular-project /usr/share/nginx/html
+COPY --from=builder /app/dist/angular-project/ /usr/share/nginx/html/
 
-# Change ownership to existing nginx user
-RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /var/run /etc/nginx/conf.d
+# Change ownership to existing nginx user for better file permissions
+RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d
 
-# Switch to non-root user
-USER nginx
+# Note: nginx:alpine requires root to manage /run/nginx.pid, so we don't switch user
 
 # Expose port 80
 EXPOSE 80
