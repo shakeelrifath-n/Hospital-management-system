@@ -37,6 +37,7 @@ yarn-error.log*
 
 # Database
 *.sql
+!init.sql
 *.db
 *.sqlite
 *.sqlite3
