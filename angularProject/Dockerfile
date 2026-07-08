@@ -19,6 +19,9 @@ RUN npm run build
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
 
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 # Remove default nginx config
 RUN rm -rf /etc/nginx/conf.d/*
 
@@ -28,12 +31,15 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy built Angular app from builder
 COPY --from=builder /app/dist/angular-project /usr/share/nginx/html
 
+# Create non-root user and change ownership
+RUN addgroup -g 1000 nginx && adduser -D -u 1000 -G nginx nginx
+RUN chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/log/nginx /var/run
+
+# Switch to non-root user
+USER nginx
+
 # Expose port 80
 EXPOSE 80
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
